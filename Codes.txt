@@ -1,0 +1,38 @@
+--1st
+SELECT g.Name , count(t.TrackId) 
+FROM Track AS t
+JOIN Genre AS g
+ON t.GenreId = g.GenreId
+GROUP BY g.Name
+ORDER by count(t.TrackId)  desc
+
+
+
+--2nd
+SELECT a.Name , CASE when t.UnitPrice > avg(t.UnitPrice) THEN sum(t.UnitPrice)
+				ELSE 0 END AS price
+FROM Artist AS a
+join Album as al
+ON	a.ArtistId = al.ArtistId
+JOIN Track as t
+on al.AlbumId = t.AlbumId
+GROUP By a.name
+HAVING price > 0
+order by price desc
+
+
+--3rd
+SELECT C.City , SUM(I.Total) AS Invoices_Sum
+FROM Customer AS C
+JOIN Invoice AS I
+ON C.CustomerId = I.CustomerId
+GROUP BY C.City
+ORDER by Invoices_Sum desc
+
+--4th
+SELECT C.FirstName , C.LastName , SUM(I.Total) AS Amount
+FROM Customer AS C
+JOIN Invoice AS I
+ON C.CustomerId = I.CustomerId
+GROUP BY C.FirstName , C.LastName
+ORDER by Amount desc
